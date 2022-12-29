@@ -311,6 +311,12 @@ namespace Frosty.Core.Controls
         public ICommand FindOpenedAssetCommand => new RelayCommand(FindOpenedAsset);
 
         #endregion
+        
+        #region OnFindOpenedAsset
+
+        public ICommand BatchExportSelectedCommand => new RelayCommand(BatchExportSelected);
+
+        #endregion
 
         #endregion
         
@@ -403,7 +409,15 @@ namespace Frosty.Core.Controls
         {
             SelectAsset(App.EditorWindow.GetOpenedAssetEntry());
         }
-        
+
+        public void BatchExportSelected(object obj)
+        {
+            if (m_selectedPath == null)
+                return;
+
+            Console.WriteLine(m_selectedPath.DisplayName);
+        }
+
         private void UpdateViewType()
         {
             if (GridView)

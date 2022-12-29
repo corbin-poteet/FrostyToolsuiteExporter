@@ -182,6 +182,10 @@
                                     <Button Height="20" Width="20" ToolTip="Find Opened Asset" HorizontalAlignment="Right" Margin="6,0,0,0" Command="{Binding Path=FindOpenedAssetCommand, RelativeSource={RelativeSource AncestorType={x:Type local:FrostyDataExplorer}}}">
                                         <Image Source="/FrostyEditor;component/Images/Open.png" Width="16"/>
                                     </Button>
+                                    <!-- Batch Export Selected -->
+                                    <Button Height="20" Width="20" ToolTip="Find Opened Asset" HorizontalAlignment="Right" Margin="6,0,0,0" Command="{Binding Path=BatchExportSelectedCommand, RelativeSource={RelativeSource AncestorType={x:Type local:FrostyDataExplorer}}}">
+                                        <Image Source="/FrostyEditor;component/Images/Export.png" Width="16"/>
+                                    </Button>
                                     <!-- Show Only Modified -->
                                     <CheckBox x:Name="PART_ShowOnlyModifiedCheckBox" VerticalAlignment="Center" Margin="6,0,0,0" IsChecked="{Binding Path=ShowOnlyModified, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:FrostyDataExplorer}}}">
                                         <TextBlock Text="Show only modified" Margin="4,-1,0,0" VerticalAlignment="Center" Foreground="{StaticResource FontColor}"/>
