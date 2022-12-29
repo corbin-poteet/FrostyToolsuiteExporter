@@ -79,4 +79,42 @@ namespace Frosty.Core.Controls
             return false;
         }
     }
+
+    public class FrostyFolderBrowserDialog
+    {
+        public string Description => fbd.Description;
+        public string SelectedPath { get => fbd.SelectedPath; set => fbd.SelectedPath = value; }
+
+        //public int FilterIndex => fbd.FilterIndex;
+
+        private string key;
+        private System.Windows.Forms.FolderBrowserDialog fbd;
+
+        public FrostyFolderBrowserDialog(string title, string inKey, string filename = "", bool overwritePrompt = true)
+        {
+            key = inKey + "ExportPath";
+            DirectoryInfo di = new DirectoryInfo(Config.Get(key, new FileInfo(Assembly.GetExecutingAssembly().FullName).DirectoryName));
+
+            fbd = new System.Windows.Forms.FolderBrowserDialog
+            {
+                Description = title,
+                //Filter = filter,
+                //FileName = filename,
+                //OverwritePrompt = overwritePrompt,
+                SelectedPath = di.Exists ? di.FullName : ""
+            };
+        }
+
+        public bool ShowDialog()
+        {
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Config.Add(key, fbd.SelectedPath);
+                Config.Save();
+                return true;
+            }
+
+            return false;
+        }
+    }
 }
