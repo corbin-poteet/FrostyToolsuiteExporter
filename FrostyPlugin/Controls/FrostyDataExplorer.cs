@@ -13,6 +13,7 @@ using Frosty.Hash;
 using Frosty.Core.Commands;
 using System.Windows.Data;
 using FrostySdk.Managers.Entries;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Frosty.Core.Controls
 {
@@ -415,9 +416,14 @@ namespace Frosty.Core.Controls
             if (m_selectedPath == null)
                 return;
 
-            Console.WriteLine(m_selectedPath.DisplayName);
-        }
 
+            FrostyFolderBrowserDialog fbd = new FrostyFolderBrowserDialog("Batch Export Location", "", "");
+            if (fbd.ShowDialog())
+            {
+                string path = fbd.SelectedPath;
+                Console.WriteLine(path);
+            }
+        }
         private void UpdateViewType()
         {
             if (GridView)
