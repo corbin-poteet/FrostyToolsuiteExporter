@@ -1,9 +1,13 @@
 # FrostyToolsuiteExporter
-A modified version of FrostyToolsuite designed for exporting assets, most notably featuring a batch exporter. The number of supported filetypes will increase with updates. Is capable of exporting every static mesh from the game in about 25 minutes.
+A modified version of FrostyToolsuite designed for exporting assets, most notably featuring a batch exporter. The number of supported filetypes will increase with updates.
 
 ## Batch Export Filetypes
 
 * Static Mesh (RigidMeshAsset, CompositeMeshAsset)
+
+## Performance
+
+Exports every static mesh from the game (14,066 assets) in about 25 minutes.
 
 ## Batch Export Instructions
 
