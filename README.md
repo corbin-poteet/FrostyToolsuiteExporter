@@ -5,7 +5,7 @@ A modified version of FrostyToolsuite designed for exporting assets, most notabl
 
 * Static Mesh (RigidMeshAsset, CompositeMeshAsset)
 
-## Instructions
+## Batch Export Instructions
 
 1. Select a folder
 2. Click button
