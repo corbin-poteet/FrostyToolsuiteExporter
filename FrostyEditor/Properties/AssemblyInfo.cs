@@ -8,7 +8,7 @@ using System.Windows.Markup;
 // associated with an assembly.
 [assembly: AssemblyTitle("Frosty Editor")]
 [assembly: AssemblyDescription("An editor for games running on the Frostbite engine")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration("Extractor")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Frosty Editor")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
