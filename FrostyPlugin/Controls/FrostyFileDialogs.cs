@@ -85,22 +85,17 @@ namespace Frosty.Core.Controls
         public string Description => fbd.Description;
         public string SelectedPath { get => fbd.SelectedPath; set => fbd.SelectedPath = value; }
 
-        //public int FilterIndex => fbd.FilterIndex;
-
         private string key;
         private System.Windows.Forms.FolderBrowserDialog fbd;
 
-        public FrostyFolderBrowserDialog(string title, string inKey, string filename = "", bool overwritePrompt = true)
+        public FrostyFolderBrowserDialog(string description)
         {
-            key = inKey + "ExportPath";
+            key = "BatchExportPath";
             DirectoryInfo di = new DirectoryInfo(Config.Get(key, new FileInfo(Assembly.GetExecutingAssembly().FullName).DirectoryName));
 
             fbd = new System.Windows.Forms.FolderBrowserDialog
             {
-                Description = title,
-                //Filter = filter,
-                //FileName = filename,
-                //OverwritePrompt = overwritePrompt,
+                Description = description,
                 SelectedPath = di.Exists ? di.FullName : ""
             };
         }

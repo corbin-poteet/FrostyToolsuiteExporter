@@ -28,7 +28,7 @@ namespace Frosty.Core.Windows
         {
             DialogResult = true;
 
-            FrostyFolderBrowserDialog fbd = new FrostyFolderBrowserDialog("Batch Export Location", "", "");
+            FrostyFolderBrowserDialog fbd = new FrostyFolderBrowserDialog("Batch Export Location");
             if (fbd.ShowDialog())
             {
                 string path = fbd.SelectedPath;
