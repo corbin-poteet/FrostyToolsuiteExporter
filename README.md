@@ -1,5 +1,10 @@
-# FrostyToolsuite
-The most advanced modding platform for games running on DICE's Frostbite game engine.
+# FrostyToolsuiteExporter
+A modified version of FrostyToolsuite designed for exporting assets, most notably featuring a batch exporter. The number of supported filetypes will increase with updates.
+
+## Batch Export Filetypes
+
+* Static Mesh (RigidMeshAsset, CompositeMeshAsset)
+
 
 ## Setup
 
