@@ -78,6 +78,54 @@ namespace MeshSetPlugin
             return new FrostyMeshSetEditor(logger);
         }
 
+        public override bool BatchExport(List<EbxAssetEntry> entries, string path, string filterType)
+        {
+            if (!base.BatchExport(entries, path, filterType))
+            {
+                if (filterType == "fbx" || filterType == "obj")
+                {
+                    if (PreBatchExport(out MeshExportSettings settings))
+                    {
+                        foreach (EbxAssetEntry entry in entries)
+                        {
+                            // export
+                            ExportInternal(entry, path, settings, filterType);
+                        }
+
+                        // save out settings to config
+                        PostExport(settings);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        private bool PreBatchExport(out MeshExportSettings outSettings)
+        {
+            MeshExportSettings settings = new MeshExportSettings();
+
+            string Version = Config.Get<string>("MeshSetExportVersion", "FBX_2012", ConfigScope.Game);
+            string Scale = Config.Get<string>("MeshSetExportScale", "Centimeters", ConfigScope.Game);
+            bool flattenHierarchy = Config.Get<bool>("MeshSetExportFlattenHierarchy", false, ConfigScope.Game);
+            bool exportSingleLod = Config.Get<bool>("MeshSetExportExportSingleLod", false, ConfigScope.Game);
+            bool exportAdditionalMeshes = Config.Get<bool>("MeshSetExportExportAdditionalMeshes", false, ConfigScope.Game);
+            string skeleton = Config.Get<string>("MeshSetExportSkeleton", "", ConfigScope.Game);
+
+            settings.Version = (MeshExportVersion)Enum.Parse(typeof(MeshExportVersion), Version);
+            settings.Scale = (MeshExportScale)Enum.Parse(typeof(MeshExportScale), Scale);
+            settings.FlattenHierarchy = flattenHierarchy;
+            settings.ExportSingleLod = exportSingleLod;
+            settings.ExportAdditionalMeshes = exportAdditionalMeshes;
+
+            if (settings is SkinnedMeshExportSettings exportSettings)
+            {
+                exportSettings.SkeletonAsset = skeleton;
+            }
+
+            outSettings = settings;
+            return FrostyImportExportBox.Show<MeshExportSettings>("Mesh Export Settings", FrostyImportExportType.Export, settings) == MessageBoxResult.OK;
+        }
+
         public override bool Export(EbxAssetEntry entry, string path, string filterType)
         {
             if (!base.Export(entry, path, filterType))

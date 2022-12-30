@@ -1,0 +1,31 @@
+﻿<ctrl:FrostyDockableWindow x:Class="Frosty.Core.Windows.BatchExportSelectedWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ctrl="clr-namespace:Frosty.Controls;assembly=FrostyControls"
+        xmlns:local="clr-namespace:Frosty.Core.Windows"
+        mc:Ignorable="d"
+        Title="Batch Export" Height="120" Width="300"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid Background="{StaticResource ListBackground}">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <CheckBox Grid.Row="0" Content="Include subdirectories" IsChecked="{Binding Path=includeSubDirectories, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BatchExportSelectedWindow}}}"  Foreground="{StaticResource FontColor}" VerticalAlignment="Center"/>
+            <CheckBox Grid.Row="1" Content="Include parent directories" IsChecked="{Binding Path=includeParentDirectories, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:BatchExportSelectedWindow}}}" Foreground="{StaticResource FontColor}" VerticalAlignment="Center"/>
+            <Grid Grid.Row="2" Margin="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" x:Name="cancelButton" Content="Cancel" Width="50" Height="22" HorizontalAlignment="Left" Click="cancelButton_Click"/>
+                <Button Grid.Column="1" x:Name="doneButton" Content="Export" Width="50" Height="22" HorizontalAlignment="Right" Click="doneButton_Click"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</ctrl:FrostyDockableWindow>

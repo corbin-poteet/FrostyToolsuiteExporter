@@ -289,6 +289,9 @@
     <Compile Include="Windows\PatchSummaryWindow.xaml.cs">
       <DependentUpon>PatchSummaryWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\BatchExportSelectedWindow.xaml.cs">
+      <DependentUpon>BatchExportSelectedWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\RenameInstanceWindow.xaml.cs">
       <DependentUpon>RenameInstanceWindow.xaml</DependentUpon>
     </Compile>
@@ -352,6 +355,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\PatchSummaryWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\BatchExportSelectedWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
