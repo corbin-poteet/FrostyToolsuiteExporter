@@ -183,7 +183,7 @@
                                         <Image Source="/FrostyEditor;component/Images/Open.png" Width="16"/>
                                     </Button>
                                     <!-- Batch Export Selected -->
-                                    <Button Height="20" Width="20" ToolTip="Find Opened Asset" HorizontalAlignment="Right" Margin="6,0,0,0" Command="{Binding Path=BatchExportSelectedCommand, RelativeSource={RelativeSource AncestorType={x:Type local:FrostyDataExplorer}}}">
+                                    <Button Height="20" Width="20" ToolTip="Batch Export Selected Folder" HorizontalAlignment="Right" Margin="6,0,0,0" Command="{Binding Path=BatchExportSelectedCommand, RelativeSource={RelativeSource AncestorType={x:Type local:FrostyDataExplorer}}}">
                                         <Image Source="/FrostyEditor;component/Images/Export.png" Width="16"/>
                                     </Button>
                                     <!-- Show Only Modified -->
