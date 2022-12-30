@@ -7,7 +7,7 @@ A modified version of FrostyToolsuite designed for exporting assets, most notabl
 
 ## Performance
 
-Exports every static mesh from the game (14,066 assets) in about 25 minutes with an AMD Ryzen 9 5950X
+Exports every static mesh from the game (14,066 assets), plus their LODs, in about 25 minutes with an AMD Ryzen 9 5950X
 
 ## Batch Export Instructions
 
