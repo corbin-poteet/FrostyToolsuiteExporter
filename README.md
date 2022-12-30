@@ -1,5 +1,5 @@
 # FrostyToolsuiteExporter
-A modified version of FrostyToolsuite designed for exporting assets, most notably featuring a batch exporter. The number of supported filetypes will increase with updates.
+A modified version of FrostyToolsuite designed for exporting assets, most notably featuring a batch exporter. The number of supported filetypes will increase with updates. Is capable of exporting every static mesh from the game in about 25 minutes.
 
 ## Batch Export Filetypes
 
