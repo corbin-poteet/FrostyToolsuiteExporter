@@ -12,6 +12,9 @@ using FrostySdk.Interfaces;
 using FrostySdk.Managers.Entries;
 using MeshSetPlugin.Resources;
 using MeshSetPlugin.Editors;
+using SharpDX.Direct3D11;
+using System.IO;
+using System.Diagnostics;
 
 namespace MeshSetPlugin
 {
@@ -78,27 +81,18 @@ namespace MeshSetPlugin
             return new FrostyMeshSetEditor(logger);
         }
 
-        public override bool BatchExport(List<EbxAssetEntry> entries, string path, string filterType)
+        public override List<EbxAssetEntry> BatchExport(List<EbxAssetEntry> entries, string path, Stopwatch stopWatch)
         {
-            if (!base.BatchExport(entries, path, filterType))
-            {
-                if (filterType == "fbx" || filterType == "obj")
-                {
-                    if (PreBatchExport(out MeshExportSettings settings))
-                    {
-                        foreach (EbxAssetEntry entry in entries)
-                        {
-                            // export
-                            ExportInternal(entry, path, settings, filterType);
-                        }
+            stopWatch?.Stop();
 
-                        // save out settings to config
-                        PostExport(settings);
-                        return true;
-                    }
-                }
+            if (PreBatchExport(out MeshExportSettings settings))
+            {
+                List<EbxAssetEntry> outList = BatchExportInternal(entries, path, settings, stopWatch);
+                PostExport(settings);
+                return outList;
             }
-            return false;
+            
+            return entries;
         }
         private bool PreBatchExport(out MeshExportSettings outSettings)
         {
@@ -117,13 +111,46 @@ namespace MeshSetPlugin
             settings.ExportSingleLod = exportSingleLod;
             settings.ExportAdditionalMeshes = exportAdditionalMeshes;
 
-            if (settings is SkinnedMeshExportSettings exportSettings)
-            {
-                exportSettings.SkeletonAsset = skeleton;
-            }
-
             outSettings = settings;
             return FrostyImportExportBox.Show<MeshExportSettings>("Mesh Export Settings", FrostyImportExportType.Export, settings) == MessageBoxResult.OK;
+        }
+        private List<EbxAssetEntry> BatchExportInternal(List<EbxAssetEntry> entries, string path, MeshExportSettings settings, Stopwatch stopWatch = null)
+        {
+            FrostyTaskWindow.Show("Exporting MeshSet", "", (task) =>
+            {
+                stopWatch?.Start();
+
+                FBXExporter exporter = new FBXExporter(task);
+
+                for (int i = entries.Count - 1; i >= 0; i--)
+                {
+                    if (entries[i].Type == "RigidMeshAsset" || entries[i].Type == "CompositeMeshAsset")
+                    {
+                        // get ebx
+                        EbxAsset asset = App.AssetManager.GetEbx(entries[i]);
+                        dynamic meshAsset = (dynamic)asset.RootObject;
+
+                        // get mesh res
+                        ulong resRid = meshAsset.MeshSetResource;
+                        ResAssetEntry rEntry = App.AssetManager.GetResEntry(resRid);
+                        MeshSet meshSet = App.AssetManager.GetResAs<MeshSet>(rEntry);
+
+                        // define combine user defined path with the asset's data explorer path
+                        string assetPath = Path.Combine(path, entries[i].Path);
+                        string assetFullPath = Path.Combine(path, entries[i].Name);
+                        System.IO.Directory.CreateDirectory(assetPath);
+
+                        // export
+                        exporter.ExportFBX(meshAsset, assetFullPath, settings.Version.ToString().Replace("FBX_", ""), settings.Scale.ToString(), settings.FlattenHierarchy, settings.ExportSingleLod, "", "binary", meshSet);
+                        
+                        // remove the exported asset from the array
+                        entries.RemoveAt(i);
+                    }
+                }
+            });
+
+            return entries;
+
         }
 
         public override bool Export(EbxAssetEntry entry, string path, string filterType)
