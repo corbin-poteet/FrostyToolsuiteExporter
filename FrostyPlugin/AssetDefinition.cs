@@ -166,6 +166,35 @@ namespace Frosty.Core
         }
 
         /// <summary>
+        /// When implemented in a derived class, performs the batch export of the assets, providing the filter type and path to export to.
+        /// </summary>
+        /// <param name="entries">The <see cref="AssetEntry"/> to export.</param>
+        /// <param name="path">A string representing the path and filename to export to.</param>
+        /// <param name="filterType">A string representing the chosen filter type to export as.</param>
+        /// <returns>True if export was successful, False otherwise.</returns>
+        public virtual bool BatchExport(List<EbxAssetEntry> entries, string path, string filterType)
+        {
+            if (filterType == "xml")
+            {
+                foreach (var entry in entries)
+                {
+                    ExportToXml(entry, path);
+                }
+                return true;
+            }
+
+            if (filterType == "bin")
+            {
+                foreach (var entry in entries)
+                {
+                    ExportToBin(entry, path);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
         /// When implemented in a derived class, performs the actual import of the asset, providing the filter type and path to import from.
         /// </summary>
         /// <param name="entry">The <see cref="AssetEntry"/> to import the data to.</param>
