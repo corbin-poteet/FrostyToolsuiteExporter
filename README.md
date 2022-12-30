@@ -5,6 +5,11 @@ A modified version of FrostyToolsuite designed for exporting assets, most notabl
 
 * Static Mesh (RigidMeshAsset, CompositeMeshAsset)
 
+---
+
+![batch export button](./FrostyEditor/Images/newbutton.JPG)
+
+---
 
 ## Setup
 
