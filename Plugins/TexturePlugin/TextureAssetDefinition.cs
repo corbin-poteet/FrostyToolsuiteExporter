@@ -7,6 +7,10 @@ using FrostySdk.Resources;
 using System.Collections.Generic;
 using System.Windows.Media;
 using FrostySdk.Managers.Entries;
+using System.Diagnostics;
+using SharpDX.Direct3D11;
+using System.IO;
+using Frosty.Core.Windows;
 
 namespace TexturePlugin
 {
@@ -32,6 +36,43 @@ namespace TexturePlugin
         {
             return imageSource;
         }
+
+        public override List<EbxAssetEntry> BatchExport(List<EbxAssetEntry> entries, string path, Stopwatch stopWatch)
+        {
+            FrostyTaskWindow.Show("Exporting Textures", "", (task) =>
+            {
+                TextureExporter exporter = new TextureExporter();
+
+                for (int i = entries.Count - 1; i >= 0; i--)
+                {
+                    if (entries[i].Type == "TextureAsset")
+                    {
+
+                        EbxAsset asset = App.AssetManager.GetEbx(entries[i]);
+                        dynamic textureAsset = (dynamic)asset.RootObject;
+
+                        ResAssetEntry resEntry = App.AssetManager.GetResEntry(textureAsset.Resource);
+                        Texture texture = App.AssetManager.GetResAs<Texture>(resEntry);
+
+                        // define combine user defined path with the asset's data explorer path
+                        string assetPath = Path.Combine(path, entries[i].Path);
+                        string assetFullPath = Path.Combine(path, entries[i].Name);
+                        string assetName = Path.GetFileName(entries[i].Name);
+                        System.IO.Directory.CreateDirectory(assetPath);
+
+                        task.Update("Writing " + assetName);
+                        exporter.Export(texture, assetFullPath + ".tga", "*.tga");
+
+                        entries.RemoveAt(i);
+                    }
+                }
+
+            });
+
+            return entries;
+
+        }
+
 
         public override bool Export(EbxAssetEntry entry, string path, string filterType)
         {

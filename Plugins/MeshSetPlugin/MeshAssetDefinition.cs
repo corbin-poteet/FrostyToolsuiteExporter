@@ -116,7 +116,7 @@ namespace MeshSetPlugin
         }
         private List<EbxAssetEntry> BatchExportInternal(List<EbxAssetEntry> entries, string path, MeshExportSettings settings, Stopwatch stopWatch = null)
         {
-            FrostyTaskWindow.Show("Exporting MeshSet", "", (task) =>
+            FrostyTaskWindow.Show("Exporting Static Meshes", "", (task) =>
             {
                 stopWatch?.Start();
 

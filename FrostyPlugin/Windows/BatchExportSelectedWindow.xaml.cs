@@ -22,7 +22,8 @@ namespace Frosty.Core.Windows
         public List<string> types = new List<string>()
         { 
             "RigidMeshAsset", 
-            "CompositeMeshAsset" 
+            "CompositeMeshAsset",
+            "TextureAsset"
         };
 
         public BatchExportSelectedWindow(AssetPath selectedPath, IEnumerable itemsSource)
@@ -48,26 +49,26 @@ namespace Frosty.Core.Windows
                 List<EbxAssetEntry> entries = new List<EbxAssetEntry>();
                 if (includeSubDirectories)
                 {
-                    foreach (AssetEntry entry in itemsSource)
+                    foreach (EbxAssetEntry entry in itemsSource)
                     {
-                        if (entry.Path.Contains(fullPath.ToLower()))
+                        if (entry.Path.ToLower().Contains(fullPath.ToLower()))
                         {
                             if (types.Contains(entry.Type))
                             {
-                                entries.Add((EbxAssetEntry)entry);
+                                entries.Add(entry);
                             }
                         }
                     }
                 }
                 else
                 {
-                    foreach (AssetEntry entry in itemsSource)
+                    foreach (EbxAssetEntry entry in itemsSource)
                     {
                         if (entry.Path.Equals(fullPath, StringComparison.OrdinalIgnoreCase))
                         {
                             if (types.Contains(entry.Type))
                             {
-                                entries.Add((EbxAssetEntry)entry);
+                                entries.Add(entry);
                             }
                         }
                     }
@@ -78,13 +79,15 @@ namespace Frosty.Core.Windows
                 int i = 0;
                 while (entries.Count > 0 && i < entries.Count)
                 {
+                    int originalCount = entries.Count;
                     // use the first instance of a given AssetDefinition to export all instances of that AssetDefinition in the array
                     AssetDefinition assetDefinition = App.PluginManager.GetAssetDefinition(entries[i].Type) ?? new AssetDefinition();
                     List<EbxAssetEntry> leftOverEntries = assetDefinition.BatchExport(entries, path, stopWatch);
                     
                     // If we somehow failed to export any entries, add 1 to i to avoid an infinite loop
-                    if (leftOverEntries.Count == entries.Count)
+                    if (leftOverEntries.Count == originalCount)
                     {
+                        Console.WriteLine("Failed to export a group of asset definitions.");
                         i++;
                     }
 
