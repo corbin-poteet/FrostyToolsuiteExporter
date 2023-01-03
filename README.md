@@ -4,6 +4,8 @@ A modified version of FrostyToolsuite designed for exporting assets, most notabl
 ## Batch Export Filetypes
 
 * Static Mesh (RigidMeshAsset, CompositeMeshAsset)
+* Textures (TextureAsset)
+* Audio (SoundWaveAsset)
 
 ## Performance
 
