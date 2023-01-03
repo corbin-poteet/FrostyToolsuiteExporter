@@ -23,7 +23,8 @@ namespace Frosty.Core.Windows
         { 
             "RigidMeshAsset", 
             "CompositeMeshAsset",
-            "TextureAsset"
+            "TextureAsset",
+            "SoundWaveAsset"
         };
 
         public BatchExportSelectedWindow(AssetPath selectedPath, IEnumerable itemsSource)
